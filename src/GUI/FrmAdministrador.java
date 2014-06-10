@@ -17,7 +17,6 @@ import javax.swing.JOptionPane;
 public class FrmAdministrador extends javax.swing.JFrame {
     
     public static String id = "";
-    public String hola = "";
     
     public FrmAdministrador() {
         initComponents();
