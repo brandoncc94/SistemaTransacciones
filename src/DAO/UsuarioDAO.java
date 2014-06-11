@@ -14,7 +14,5 @@ public interface UsuarioDAO {
     
     public int cambiarPassword(String pPassword, int pIdUsuario);
     
-    public int crearAgente(Usuario pUsuario, int pAgenciaId);
-    
-    public List seleccionarAgencias();
+    public List<Integer> seleccionarAgencias();
 }

@@ -160,51 +160,7 @@ public class ConsultasUsuarioDAO implements UsuarioDAO {
      }
      
      @Override
-     public int crearAgente(Usuario pUsuario, int pAgenciaId){
-        Connection conn = null;
-        PreparedStatement stmt;
-        int rowCount = 0;
-        
-        try{  
-            conn = SQLServerDAOFactory.createConnection();
-            stmt = conn.prepareStatement("EXEC SPUCrearAgente "
-                    + "@nombre = ?, "
-                    + "@apellidoP = ?, "
-                    + "@apellidoM = ?, "
-                    + "@usuario = ?, "
-                    + "@password = ?, "
-                    + "@tipo = ?, "
-                    + "@agenciaId = ? ");
-            stmt.setString(1, pUsuario.getNombre());
-            stmt.setString(2, pUsuario.getApellidoP());
-            stmt.setString(3, pUsuario.getApellidoM());
-            stmt.setString(4, pUsuario.getUsuario());
-            stmt.setString(5, pUsuario.getPassword());
-            stmt.setInt(6, pUsuario.getTipo());
-            stmt.setInt(7, pAgenciaId);
-            
-            stmt.executeUpdate();
-            rowCount = 1;
-        } 
-        catch(SQLException e){
-            rowCount = -1;
-            System.out.println("Message: " + e.getMessage() + "\n" + "Code: " + e.getErrorCode());
-        }
-        finally{
-            if(conn != null){
-                try{
-                    conn.close();
-                }
-                catch(SQLException e){
-                    System.out.println("Message: " + e.getMessage() + "\n" + "Code: " + e.getErrorCode());
-                }
-            }
-        }
-        return rowCount;
-     }
-     
-     @Override
-    public List seleccionarAgencias() {
+    public List<Integer> seleccionarAgencias() {
         Connection conn = null;
         PreparedStatement stmt;
         ResultSet rs;

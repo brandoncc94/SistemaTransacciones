@@ -1,6 +1,7 @@
 
 package GUI;
 
+import DAO.AdministradorDAO;
 import DAO.UsuarioDAO;
 import Factory.DAOFactory;
 import java.awt.HeadlessException;
@@ -177,8 +178,14 @@ public class FrmMainWindow extends javax.swing.JFrame {
                     }
                     else if(result.get(1) == 2)
                         JOptionPane.showMessageDialog(null, "AGENTE"); 
-                    else if(result.get(1) == 3)
-                        JOptionPane.showMessageDialog(null, "PARTICIPANTE");                     
+                    else if(result.get(1) == 3){
+                        AdministradorDAO adminDAO = sqlserverFactory.getAdministradorDAO();
+                        int suspendido = adminDAO.isSuspendido(result.get(0));
+                        if(suspendido == 1)
+                            JOptionPane.showMessageDialog(null, "PARTICIPANTE");                     
+                        else
+                            JOptionPane.showMessageDialog(null, "Este usuario se encuentra suspendido.");                     
+                    }
                     else
                         JOptionPane.showMessageDialog(null, "Los datos ingresados son incorrectos. Favor intente de nuevo."); 
                     
