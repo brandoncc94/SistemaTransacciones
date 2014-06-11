@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -153,11 +154,13 @@ public class ConsultasAdministradorDAO implements AdministradorDAO {
                     Object dato[] = new  Object[4];
                     for (int i=0; i<4; i++){
                         dato[i]=rs.getString(i+1);
-                        if(i == 3)
-                            if(dato[i].equals("1"))
+                        if(i == 3){
+                            JOptionPane.showMessageDialog(null, dato[i]);
+                            if(dato[i].equals("1") || dato[i].equals("True"))
                                 dato[i] = "Activo";
                             else
                                 dato[i] = "Inactivo";
+                        }
                     }
                     tabla.addRow(dato);
                 }
