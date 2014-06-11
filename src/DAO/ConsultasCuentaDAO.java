@@ -2,6 +2,7 @@
 package DAO;
 
 import Factory.SQLServerDAOFactory;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +13,7 @@ public class ConsultasCuentaDAO implements CuentaDAO{
     public ConsultasCuentaDAO() {}
     
     @Override
-    public int obtenerCuenta(int participanteId, boolean isDolar)
+    public int obtenerCuentaId(int participanteId, boolean isDolar)
     {
         Connection conn = null;
         PreparedStatement stmt;
@@ -44,6 +45,12 @@ public class ConsultasCuentaDAO implements CuentaDAO{
             }
         }        
         return cuentaId;
+    }
+    
+    @Override
+    public int congelarMonto(int cuentaId, BigDecimal monto)
+    {
+        
     }
     
 }
