@@ -212,7 +212,7 @@ public class ConsultasUsuarioDAO implements UsuarioDAO {
         
         try{  
             conn = SQLServerDAOFactory.createConnection();
-            stmt = conn.prepareStatement("SELECT idAgencia FROM Agencia");
+            stmt = conn.prepareStatement("SELECT idAgencia FROM Agencias");
             rs = stmt.executeQuery();
             
             agencias = new ArrayList();
