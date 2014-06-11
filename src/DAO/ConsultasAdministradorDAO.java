@@ -1,6 +1,7 @@
 
 package DAO;
 
+import Classes.Sesion;
 import Classes.Usuario;
 import Factory.SQLServerDAOFactory;
 import java.sql.Connection;
@@ -301,5 +302,76 @@ public class ConsultasAdministradorDAO implements AdministradorDAO {
         }
         return -1;
 
+    }
+    
+    @Override
+    public List<Integer> seleccionarSesiones(){
+        Connection conn = null;
+        PreparedStatement stmt;
+        ResultSet rs;
+        List<Integer> sesiones = new ArrayList<>();
+        
+        try{  
+            conn = SQLServerDAOFactory.createConnection();
+            stmt = conn.prepareStatement("SELECT idSesion FROM Sesiones");
+            rs = stmt.executeQuery();
+            
+            sesiones = new ArrayList();
+            
+            while(rs.next()){
+                sesiones.add(rs.getInt("idSesion"));
+            }
+        } 
+        catch(SQLException e){
+            System.out.println("Message: " + e.getMessage() + "\n" + "Code: " + e.getErrorCode());
+        }
+        finally{
+            if(conn != null){
+                try{
+                    conn.close();
+                }
+                catch(SQLException e){
+                    System.out.println("Message: " + e.getMessage() + "\n" + "Code: " + e.getErrorCode());
+                }
+            }
+        }
+        
+        return sesiones;
+    }
+    
+    @Override
+    public int crearSesion(Sesion pSesion){
+        Connection conn = null;
+        PreparedStatement stmt;
+        int rowCount = 0;
+        
+        try{  
+            conn = SQLServerDAOFactory.createConnection();
+            stmt = conn.prepareStatement("EXEC SPUCrearSesion "
+                    + "@adminId = ?, "
+                    + "@comision = ?, "
+                    + "@isFinalizada = ? ");
+            stmt.setInt(1, pSesion.getAdminId());
+            stmt.setInt(2, pSesion.getPorcentComision());
+            stmt.setBoolean(3, pSesion.isIsFinalizada());
+            
+            stmt.executeUpdate();
+            rowCount = 1;
+        } 
+        catch(SQLException e){
+            rowCount = -1;
+            System.out.println("Message: " + e.getMessage() + "\n" + "Code: " + e.getErrorCode());
+        }
+        finally{
+            if(conn != null){
+                try{
+                    conn.close();
+                }
+                catch(SQLException e){
+                    System.out.println("Message: " + e.getMessage() + "\n" + "Code: " + e.getErrorCode());
+                }
+            }
+        }
+        return rowCount;
     }
 }
