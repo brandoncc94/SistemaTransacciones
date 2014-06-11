@@ -181,8 +181,12 @@ public class FrmMainWindow extends javax.swing.JFrame {
                     else if(result.get(1) == 3){
                         AdministradorDAO adminDAO = sqlserverFactory.getAdministradorDAO();
                         int suspendido = adminDAO.isSuspendido(result.get(0));
-                        if(suspendido == 1)
-                            JOptionPane.showMessageDialog(null, "PARTICIPANTE");                     
+                        if(suspendido == 1){
+                            dispose();
+                            String info[] = new String[1];
+                            info[0] = String.valueOf(result.get(0));
+                            FrmParticipante.main(info);                   
+                        }
                         else
                             JOptionPane.showMessageDialog(null, "Este usuario se encuentra suspendido.");                     
                     }

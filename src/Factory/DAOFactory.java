@@ -3,6 +3,8 @@ package Factory;
 
 import DAO.AdministradorDAO;
 import DAO.UsuarioDAO;
+import DAO.OfertaDAO;
+import DAO.SesionDAO;
 
 public abstract class DAOFactory {
 
@@ -16,6 +18,8 @@ public abstract class DAOFactory {
     // There will be a method for each DAO that can be created. The concrete factories will have to implement these methods.
     public abstract AdministradorDAO getAdministradorDAO();
     public abstract UsuarioDAO getUsuarioDAO();
+    public abstract OfertaDAO getOfertaDAO();
+    public abstract SesionDAO getSesionDAO();
 
     public static DAOFactory getDAOFactory(int whichFactory){
 

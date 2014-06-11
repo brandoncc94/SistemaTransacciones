@@ -40,6 +40,17 @@ public class SQLServerDAOFactory extends DAOFactory {
     public UsuarioDAO getUsuarioDAO(){
         return new ConsultasUsuarioDAO();
     }
+    
+    @Override
+    public OfertaDAO getOfertaDAO(){
+        return new ConsultasOfertaDAO();
+    }
+    
+    @Override
+    public SesionDAO getSesionDAO(){
+        return new ConsultasSesionDAO();
+    }
+    
 }
 
 
