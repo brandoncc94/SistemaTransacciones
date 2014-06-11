@@ -6,10 +6,20 @@ public class Sesion {
     
     private int adminId;
     private int porcentComision;
+    private boolean isFinalizada;
 
-    public Sesion(int adminId, int porcentComision) {
+    public Sesion(int adminId, int porcentComision, boolean isFinalizada) {
         this.adminId = adminId;
         this.porcentComision = porcentComision;
+        this.isFinalizada = isFinalizada;
+    }
+
+    public boolean isIsFinalizada() {
+        return isFinalizada;
+    }
+
+    public void setIsFinalizada(boolean isFinalizada) {
+        this.isFinalizada = isFinalizada;
     }
 
     public int getAdminId() {

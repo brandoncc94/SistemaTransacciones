@@ -1,6 +1,7 @@
 
 package DAO;
 
+import Classes.Sesion;
 import Classes.Usuario;
 import java.util.List;
 import javax.swing.JTable;
@@ -19,4 +20,7 @@ public interface AdministradorDAO {
     
     public int mostrarPizarra(String pOrdenar, JTable pTable);
     
+    public List<Integer> seleccionarSesiones();
+    
+    public int crearSesion(Sesion pSesion);
 }
