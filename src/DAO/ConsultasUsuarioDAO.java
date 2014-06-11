@@ -42,7 +42,7 @@ public class ConsultasUsuarioDAO implements UsuarioDAO {
         } 
         catch(SQLException e){
             info = null;
-            System.out.println("Message: " + e.getMessage() + "\n" + "Code: " + e.getErrorCode());
+            System.out.println("Message ESTE: " + e.getMessage() + "\n" + "Code: " + e.getErrorCode());
         }
         finally{
             if(conn != null){
