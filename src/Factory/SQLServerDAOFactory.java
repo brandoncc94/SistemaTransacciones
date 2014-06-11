@@ -51,6 +51,11 @@ public class SQLServerDAOFactory extends DAOFactory {
         return new ConsultasSesionDAO();
     }
     
+    @Override
+    public CuentaDAO getCuentaDAO(){
+        return new ConsultasCuentaDAO();
+    }
+    
 }
 
 
