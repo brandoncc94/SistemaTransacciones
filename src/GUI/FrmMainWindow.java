@@ -176,9 +176,17 @@ public class FrmMainWindow extends javax.swing.JFrame {
                         FrmAdministrador.main(info);
                     }
                     else if(result.get(1) == 2)
-                        JOptionPane.showMessageDialog(null, "AGENTE"); 
+                    {
+                        JOptionPane.showMessageDialog(null, "AGENTE");                        
+                    }
                     else if(result.get(1) == 3)
-                        JOptionPane.showMessageDialog(null, "PARTICIPANTE");                     
+                    {
+                        JOptionPane.showMessageDialog(null, "PARTICIPANTE");  
+                        dispose();
+                        String info[] = new String[1];
+                        info[0] = String.valueOf(result.get(0));
+                        FrmParticipante.main(info);
+                    }
                     else
                         JOptionPane.showMessageDialog(null, "Los datos ingresados son incorrectos. Favor intente de nuevo."); 
                     
