@@ -140,7 +140,7 @@ public class FrmParticipante extends javax.swing.JFrame {
         cmbTipoOferta.setSelectedIndex(-1);
 
         btnCrearOferta.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnCrearOferta.setText("Crear");
+        btnCrearOferta.setText("Confirmar");
         btnCrearOferta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCrearOfertaActionPerformed(evt);
@@ -154,18 +154,19 @@ public class FrmParticipante extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(144, 144, 144)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnCrearOferta)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4))
-                        .addGap(42, 42, 42)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(tbxMonto, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tbxTipoCambio, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbTipoOferta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4))
+                .addGap(42, 42, 42)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(tbxMonto, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tbxTipoCambio, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cmbTipoOferta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(224, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCrearOferta)
+                .addGap(164, 164, 164))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,9 +184,9 @@ public class FrmParticipante extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel6)
                     .addComponent(cmbTipoOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(156, 156, 156)
+                .addGap(26, 26, 26)
                 .addComponent(btnCrearOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(178, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Crear Oferta", jPanel5);
@@ -256,6 +257,8 @@ public class FrmParticipante extends javax.swing.JFrame {
 
                 // Crear Oferta
                 Oferta oferta = new Oferta(isCompra, monto, tipoCambio, true, Integer.parseInt(id), sesionActualID);
+                
+                // Congelar Monto
 
                 int result = ofertaDAO.crearOferta(oferta);
                 if(result > 0)

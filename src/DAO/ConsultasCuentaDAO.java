@@ -7,30 +7,30 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ConsultasSesionDAO implements SesionDAO {
+public class ConsultasCuentaDAO implements CuentaDAO{
 
-    public ConsultasSesionDAO() {}
+    public ConsultasCuentaDAO() {}
     
     @Override
-    public int obtenerSesionActual()
+    public int obtenerCuenta(int participanteId, boolean isDolar)
     {
         Connection conn = null;
         PreparedStatement stmt;
         ResultSet rs;
-        int sesionId = -1;
+        int cuentaId = -1;
         
         try{         
             conn = SQLServerDAOFactory.createConnection();
-            stmt = conn.prepareStatement("EXEC SPObtenerSesionActual");
+            stmt = conn.prepareStatement("EXEC SPObtenerCuenta");
 
             rs = stmt.executeQuery();
             
             while(rs.next()){
-                sesionId = rs.getInt("idSesion");
+                cuentaId = rs.getInt("idCuenta");
             }
         } 
         catch(SQLException e){
-            sesionId = -1;
+            cuentaId = -1;
             System.out.println("Message: " + e.getMessage() + "\n" + "Code: " + e.getErrorCode());
         }
         finally{
@@ -43,6 +43,7 @@ public class ConsultasSesionDAO implements SesionDAO {
                 }
             }
         }        
-        return sesionId;
+        return cuentaId;
     }
+    
 }
