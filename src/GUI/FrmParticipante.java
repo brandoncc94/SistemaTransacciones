@@ -2,8 +2,10 @@
 package GUI;
 
 import Classes.Oferta;
+import Classes.Cuenta;
 import Classes.Usuario;
 import DAO.OfertaDAO;
+import DAO.CuentaDAO;
 import DAO.SesionDAO;
 import DAO.UsuarioDAO;
 import Factory.DAOFactory;
@@ -252,20 +254,57 @@ public class FrmParticipante extends javax.swing.JFrame {
                 BigDecimal monto = BigDecimal.valueOf(Float.parseFloat(tbxMonto.getText()));
                 BigDecimal tipoCambio = BigDecimal.valueOf(Float.parseFloat(tbxTipoCambio.getText()));
                 
+                // Sesion actual
                 SesionDAO sesionDAO = sqlserverFactory.getSesionDAO();
-                int sesionActualID = sesionDAO.obtenerSesionActual();
-
-                // Crear Oferta
-                Oferta oferta = new Oferta(isCompra, monto, tipoCambio, true, Integer.parseInt(id), sesionActualID);
+                List<Integer> resultSesion = sesionDAO.obtenerSesionActual();// id , comision
                 
-                // Congelar Monto
-
-                int result = ofertaDAO.crearOferta(oferta);
+                // Verificar que la cuenta tiene suficientes fondos
+                CuentaDAO cuentaDAO = sqlserverFactory.getCuentaDAO();
+                Cuenta cuenta;
+                boolean aprobada = false;
+                BigDecimal aCongelar = monto;
+                
+                BigDecimal comision = BigDecimal.valueOf((double)resultSesion.get(1) / 100);
+                comision = comision.multiply(monto);
+                
+                System.out.println("COMISION: " + comision);
+                
+                if (isCompra) // monto*tipoCambio+(monto*tipoCambio*comision/100)
+                {
+                    cuenta = cuentaDAO.obtenerCuenta(Integer.parseInt(id), false);    
+                    comision = comision.multiply(tipoCambio);
+                    aCongelar = aCongelar.multiply(tipoCambio);
+                    aCongelar = aCongelar.add(comision);
+                }
+                
+                else // monto+(monto*comision/100)
+                {
+                    cuenta = cuentaDAO.obtenerCuenta(Integer.parseInt(id), true);
+                   aCongelar = aCongelar.add(comision);
+                }
+                
+                if (cuenta.getSaldo().compareTo(aCongelar) != -1)            
+                    aprobada = true;                  
+  
+                int result = 0;
+                if (aprobada)
+                {
+                    // Congelar Monto
+                    int resultCong = cuentaDAO.congelarMonto(cuenta.getId(), aCongelar);
+                    
+                    // Crear Oferta       
+                    Oferta oferta;
+                    oferta = new Oferta(isCompra, monto, tipoCambio, true, 
+                                        Integer.parseInt(id), resultSesion.get(0));               
+                    result = ofertaDAO.crearOferta(oferta);
+                }
+                
                 if(result > 0)
                     JOptionPane.showMessageDialog(null, "Oferta creada correctamente."); 
 
                 else
-                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error al crear la oferta, favor intente de nuevo."); 
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error al crear la oferta "
+                                        + "o no hay suficientes fondos, favor intente de nuevo."); 
             }
             
             catch(HeadlessException e)
