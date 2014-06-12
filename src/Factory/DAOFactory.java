@@ -6,6 +6,7 @@ import DAO.UsuarioDAO;
 import DAO.OfertaDAO;
 import DAO.SesionDAO;
 import DAO.CuentaDAO;
+import DAO.ParticipanteDAO;
 
 public abstract class DAOFactory {
 
@@ -18,6 +19,7 @@ public abstract class DAOFactory {
     public abstract OfertaDAO getOfertaDAO();
     public abstract SesionDAO getSesionDAO();
     public abstract CuentaDAO getCuentaDAO();
+    public abstract ParticipanteDAO getParticipanteDAO();
 
     public static DAOFactory getDAOFactory(int whichFactory){
 
