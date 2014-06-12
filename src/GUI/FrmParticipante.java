@@ -3,12 +3,12 @@ package GUI;
 
 import Classes.Oferta;
 import Classes.Cuenta;
-import Classes.Usuario;
 import DAO.AdministradorDAO;
 import DAO.OfertaDAO;
 import DAO.CuentaDAO;
 import DAO.SesionDAO;
 import DAO.UsuarioDAO;
+import DAO.ParticipanteDAO;
 import Factory.DAOFactory;
 import java.awt.HeadlessException;
 import java.math.BigDecimal;
@@ -19,7 +19,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+
 
 public class FrmParticipante extends javax.swing.JFrame {
     
@@ -53,6 +54,7 @@ public class FrmParticipante extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnGroup = new javax.swing.ButtonGroup();
         lblMensaje = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         lblAutenticado = new javax.swing.JLabel();
@@ -62,7 +64,20 @@ public class FrmParticipante extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         pizarra = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tablaNegociaciones = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
+        rbtCompra = new javax.swing.JRadioButton();
+        jLabel15 = new javax.swing.JLabel();
+        rbtRangoMonto = new javax.swing.JRadioButton();
+        jLabel16 = new javax.swing.JLabel();
+        rbtRangoTipoCambio = new javax.swing.JRadioButton();
+        jLabel17 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tablaOfertas = new javax.swing.JTable();
+        jLabel18 = new javax.swing.JLabel();
+        rbtVenta = new javax.swing.JRadioButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -134,28 +149,148 @@ public class FrmParticipante extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Listar Pizarra", jPanel2);
 
+        tablaNegociaciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane4.setViewportView(tablaNegociaciones);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 664, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGap(20, 20, 20)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE)
+                    .addGap(20, 20, 20)))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 405, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGap(81, 81, 81)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(81, Short.MAX_VALUE)))
         );
 
         jTabbedPane1.addTab("Útimas Negociaciones", jPanel3);
+
+        btnGroup.add(rbtCompra);
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel15.setText("Compra");
+
+        btnGroup.add(rbtRangoMonto);
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel16.setText("Rango Monto");
+
+        btnGroup.add(rbtRangoTipoCambio);
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel17.setText("Rango Tipo de Cambio");
+
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        tablaOfertas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane6.setViewportView(tablaOfertas);
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel18.setText("Venta");
+
+        btnGroup.add(rbtVenta);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 664, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel18)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(rbtVenta)))
+                .addGap(41, 41, 41)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel15)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(rbtCompra)))
+                .addGap(30, 30, 30)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel16)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(rbtRangoMonto)))
+                .addGap(32, 32, 32)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel17)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(71, 71, 71)
+                        .addComponent(rbtRangoTipoCambio)))
+                .addGap(34, 34, 34)
+                .addComponent(jButton1)
+                .addGap(101, 101, 101))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 644, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 405, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addGap(6, 6, 6)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addComponent(jLabel17)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(rbtRangoTipoCambio)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rbtRangoMonto))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rbtCompra))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rbtVenta)))
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Buscar Ofertas", jPanel4);
@@ -298,8 +433,6 @@ public class FrmParticipante extends javax.swing.JFrame {
                 BigDecimal comision = BigDecimal.valueOf((double)resultSesion.get(1) / 100);
                 comision = comision.multiply(monto);
                 
-                System.out.println("COMISION: " + comision);
-                
                 if (isCompra) // monto*tipoCambio+(monto*tipoCambio*comision/100)
                 {
                     cuenta = cuentaDAO.obtenerCuenta(Integer.parseInt(id), false);    
@@ -323,11 +456,14 @@ public class FrmParticipante extends javax.swing.JFrame {
                     // Congelar Monto
                     int resultCong = cuentaDAO.congelarMonto(cuenta.getId(), aCongelar);
                     
-                    // Crear Oferta       
-                    Oferta oferta;
-                    oferta = new Oferta(isCompra, monto, tipoCambio, true, 
-                                        Integer.parseInt(id), resultSesion.get(0));               
-                    result = ofertaDAO.crearOferta(oferta);
+                    if(resultCong > 0)
+                    {
+                        // Crear Oferta       
+                        Oferta oferta;
+                        oferta = new Oferta(isCompra, monto, tipoCambio, true, 
+                                            Integer.parseInt(id), resultSesion.get(0));               
+                        result = ofertaDAO.crearOferta(oferta);
+                    }
                 }
                 
                 if(result > 0)
@@ -350,13 +486,111 @@ public class FrmParticipante extends javax.swing.JFrame {
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
         
+        // Cargar pizarra de ofertas
         DAOFactory sqlserverFactory = DAOFactory.getDAOFactory(DAOFactory.SQLSERVER);
-            AdministradorDAO adminDAO = sqlserverFactory.getAdministradorDAO();
-            int result = adminDAO.mostrarPizarra("ID", pizarra);
-            if(result < 0)
-                JOptionPane.showMessageDialog(null, "Ha ocurrido un error."); 
+        AdministradorDAO adminDAO = sqlserverFactory.getAdministradorDAO();
+        int resultPizz = adminDAO.mostrarPizarra("ID", pizarra);
+        if(resultPizz < 0)
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error."); 
+        
+        // Cargar últimas ofertas
+        ParticipanteDAO participanteDAO = sqlserverFactory.getParticipanteDAO();
+        int  resultNeg = participanteDAO.mostrarNegociaciones(Integer.parseInt(id), tablaNegociaciones);
+        if (resultNeg < 0)
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error."); 
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String criterio = "";
+        boolean isCompra = false;
+        BigDecimal rangoMax = BigDecimal.ZERO;
+        BigDecimal rangoMin = BigDecimal.ZERO;
+        
+        if(rbtCompra.isSelected())
+        {
+            criterio = "Tipo";
+            isCompra = true;
+        }
+        
+        else if(rbtVenta.isSelected())
+            criterio = "Tipo";
+        
+        else if(rbtRangoMonto.isSelected())
+        {
+            criterio = "Monto";
+            List<BigDecimal> rango = obtenerPanelRangos();
+            
+            if (rango == null)
+                JOptionPane.showMessageDialog(null, "Favor indicar los rangos de búsqueda.");
+            else
+            {
+                rangoMin = rango.get(0);
+                rangoMax = rango.get(1);
+                System.out.println("MINIMO: " + rangoMin + " MAXIMO " + rangoMax);
+            }
+        }
+        
+        else if(rbtRangoTipoCambio.isSelected())
+        {
+            criterio = "TipoCambio";
+            List<BigDecimal> rango = obtenerPanelRangos();
+            
+            if (rango == null)
+                JOptionPane.showMessageDialog(null, "Favor indicar los rangos de búsqueda.");
+            else
+            {
+                rangoMin = rango.get(0);
+                rangoMax = rango.get(1);
+                System.out.println("MINIMO: " + rangoMin + " MAXIMO " + rangoMax);
+            }
+        }
+        
+        else
+        {
+            criterio = "Vacio";
+            JOptionPane.showMessageDialog(null, "Favor seleccionar una opción.");
+        }
+        
+        if(!criterio.equals("Vacio"))
+        {
+            DAOFactory sqlserverFactory = DAOFactory.getDAOFactory(DAOFactory.SQLSERVER);
+            ParticipanteDAO participanteDAO = sqlserverFactory.getParticipanteDAO();
+            int result = participanteDAO.buscarOfertas(criterio, rangoMin, rangoMax, isCompra, tablaOfertas);
+            
+            if(result < 0)
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error.");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private List<BigDecimal> obtenerPanelRangos()
+    {
+      List<BigDecimal> rango = new ArrayList<>();
+      JTextField rangoMinField = new JTextField(5);
+      JTextField rangoMaxField = new JTextField(5);
+
+      JPanel panelRangos = new JPanel();
+      panelRangos.add(new JLabel("Mínimo"));
+      panelRangos.add(rangoMinField);
+      panelRangos.add(Box.createHorizontalStrut(15)); // espacio
+      panelRangos.add(new JLabel("Máximo"));
+      panelRangos.add(rangoMaxField);
+      
+      JOptionPane.showConfirmDialog(null, panelRangos, "Rangos de búsqueda", JOptionPane.DEFAULT_OPTION);
+      
+      if(rangoMinField.getText().trim().length() != 0 && rangoMaxField.getText().trim().length() != 0)
+      {
+         BigDecimal rangoMin = BigDecimal.valueOf(Float.parseFloat(rangoMinField.getText()));
+         BigDecimal rangoMax = BigDecimal.valueOf(Float.parseFloat(rangoMaxField.getText()));
+         rango.add(rangoMin);
+         rango.add(rangoMax);
+         
+         return rango;
+      }
+      
+      else
+           return null;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -395,8 +629,14 @@ public class FrmParticipante extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearOferta;
+    private javax.swing.ButtonGroup btnGroup;
     private javax.swing.JComboBox cmbTipoOferta;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -405,11 +645,19 @@ public class FrmParticipante extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblAutenticado;
     private javax.swing.JLabel lblMensaje;
     private javax.swing.JTable pizarra;
+    private javax.swing.JRadioButton rbtCompra;
+    private javax.swing.JRadioButton rbtRangoMonto;
+    private javax.swing.JRadioButton rbtRangoTipoCambio;
+    private javax.swing.JRadioButton rbtVenta;
+    private javax.swing.JTable tablaNegociaciones;
+    private javax.swing.JTable tablaOfertas;
     private javax.swing.JTextField tbxMonto;
     private javax.swing.JTextField tbxTipoCambio;
     // End of variables declaration//GEN-END:variables
