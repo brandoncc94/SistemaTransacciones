@@ -66,6 +66,40 @@ public class FrmAdministrador extends javax.swing.JFrame {
         cmbSesiones.setModel(modeloCombo);
     }
     
+    
+    public void loadTransacciones(){     
+        DAOFactory sqlserverFactory = DAOFactory.getDAOFactory(DAOFactory.SQLSERVER);
+        AdministradorDAO adminDAO = sqlserverFactory.getAdministradorDAO();
+        
+        List<Integer> sesiones = new ArrayList<>();
+        DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
+        
+        sesiones = adminDAO.seleccionarTodasSesiones();
+        
+        Iterator iterador = sesiones.listIterator();
+        while( iterador.hasNext() ) {
+            modeloCombo.addElement(iterador.next());
+        }   
+        cmbTransacciones.setModel(modeloCombo);
+        cmbTransacciones2.setModel(modeloCombo);
+    }        
+    
+    public void loadTransaccionesIntoTable(){
+        DAOFactory sqlserverFactory = DAOFactory.getDAOFactory(DAOFactory.SQLSERVER);
+        AdministradorDAO adminDAO = sqlserverFactory.getAdministradorDAO();
+        int result = adminDAO.seleccionarTransacciones(Integer.parseInt(cmbTransacciones.getSelectedItem().toString()), tablaTransacciones);
+        if(result < 0 )
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
+    }  
+    
+    public void loadTransaccionesIntoTable2(){
+        DAOFactory sqlserverFactory = DAOFactory.getDAOFactory(DAOFactory.SQLSERVER);
+        AdministradorDAO adminDAO = sqlserverFactory.getAdministradorDAO();
+        int result = adminDAO.seleccionarEstadisticasTransacciones(Integer.parseInt(cmbTransacciones2.getSelectedItem().toString()), tablaEstadisitcasTransacciones);
+        if(result < 0 )
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
+    }
+    
     public void loadParticipantesIds(){
         DAOFactory sqlserverFactory = DAOFactory.getDAOFactory(DAOFactory.SQLSERVER);
         AdministradorDAO adminDAO = sqlserverFactory.getAdministradorDAO();
@@ -158,6 +192,8 @@ public class FrmAdministrador extends javax.swing.JFrame {
         jSeparator8 = new javax.swing.JSeparator();
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaTransacciones = new javax.swing.JTable();
+        jLabel23 = new javax.swing.JLabel();
+        cmbTransacciones = new javax.swing.JComboBox();
         jPanel4 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
@@ -169,6 +205,14 @@ public class FrmAdministrador extends javax.swing.JFrame {
         jSeparator7 = new javax.swing.JSeparator();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel24 = new javax.swing.JLabel();
+        cmbTransacciones2 = new javax.swing.JComboBox();
+        jLabel25 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tablaEstadisitcasTransacciones = new javax.swing.JTable();
+        jSeparator9 = new javax.swing.JSeparator();
+        jButton4 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -571,16 +615,37 @@ public class FrmAdministrador extends javax.swing.JFrame {
         ));
         jScrollPane4.setViewportView(tablaTransacciones);
 
+        jLabel23.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel23.setText("ID Sesión:");
+
+        cmbTransacciones.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbTransaccionesItemStateChanged(evt);
+            }
+        });
+        cmbTransacciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbTransaccionesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel22)
-                    .addComponent(jSeparator8)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel22)
+                            .addComponent(jSeparator8)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(190, 190, 190)
+                        .addComponent(jLabel23)
+                        .addGap(65, 65, 65)
+                        .addComponent(cmbTransacciones, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(98, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -590,9 +655,13 @@ public class FrmAdministrador extends javax.swing.JFrame {
                 .addComponent(jLabel22)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel23)
+                    .addComponent(cmbTransacciones, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Administrar Transacciones", jPanel5);
@@ -684,6 +753,79 @@ public class FrmAdministrador extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("Administrar Sesiones", jPanel4);
+
+        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel24.setText("Estadísticas Transacciones");
+
+        cmbTransacciones2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbTransacciones2ActionPerformed(evt);
+            }
+        });
+
+        jLabel25.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel25.setText("ID Sesión:");
+
+        tablaEstadisitcasTransacciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane5.setViewportView(tablaEstadisitcasTransacciones);
+
+        jButton4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton4.setText("Buscar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel24)
+                            .addComponent(jSeparator9)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(148, 148, 148)
+                        .addComponent(jLabel25)
+                        .addGap(40, 40, 40)
+                        .addComponent(cmbTransacciones2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(59, 59, 59)
+                        .addComponent(jButton4)))
+                .addContainerGap(98, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jLabel24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel25)
+                    .addComponent(cmbTransacciones2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
+                .addGap(22, 22, 22)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Estadisticas", jPanel2);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 153, 51));
@@ -781,7 +923,7 @@ public class FrmAdministrador extends javax.swing.JFrame {
                         Usuario usuario = new Usuario(tbxNombre.getText(), tbxApellidoP.getText(),
                             tbxApellidoM.getText(), tbxUsuario.getText(), pass, 2);
 
-                        int result = adminDAO.crearAgente(usuario, (int) cmbAgencias.getSelectedItem());
+                        int result = adminDAO.crearAgente(usuario, (int) cmbAgencias.getSelectedItem(), Integer.parseInt(id));
                         if(result > 0){
                             JOptionPane.showMessageDialog(null, "Agente creado correctamente.");
                         }else
@@ -814,6 +956,7 @@ public class FrmAdministrador extends javax.swing.JFrame {
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
         loadSesiones();
+        loadTransacciones();
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -863,6 +1006,24 @@ public class FrmAdministrador extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void cmbTransaccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTransaccionesActionPerformed
+        //Buscar transacciones
+        loadTransaccionesIntoTable();
+    }//GEN-LAST:event_cmbTransaccionesActionPerformed
+
+    private void cmbTransacciones2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTransacciones2ActionPerformed
+        
+    }//GEN-LAST:event_cmbTransacciones2ActionPerformed
+
+    private void cmbTransaccionesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbTransaccionesItemStateChanged
+        
+    }//GEN-LAST:event_cmbTransaccionesItemStateChanged
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        //Buscar transacciones
+        loadTransaccionesIntoTable2();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -906,9 +1067,12 @@ public class FrmAdministrador extends javax.swing.JFrame {
     private javax.swing.JComboBox cmbAgencias;
     private javax.swing.JComboBox cmbIDParticpantes;
     private javax.swing.JComboBox cmbSesiones;
+    private javax.swing.JComboBox cmbTransacciones;
+    private javax.swing.JComboBox cmbTransacciones2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -924,6 +1088,9 @@ public class FrmAdministrador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -932,6 +1099,7 @@ public class FrmAdministrador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -942,6 +1110,7 @@ public class FrmAdministrador extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -950,6 +1119,7 @@ public class FrmAdministrador extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
+    private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JLabel lblAutenticado;
@@ -958,6 +1128,7 @@ public class FrmAdministrador extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbtIdOferta;
     private javax.swing.JRadioButton rbtMonto;
     private javax.swing.JRadioButton rbtTipoCambio;
+    private javax.swing.JTable tablaEstadisitcasTransacciones;
     private javax.swing.JTable tablaParticipantes;
     private javax.swing.JTable tablaTransacciones;
     private javax.swing.JTable tablaUsuarios;

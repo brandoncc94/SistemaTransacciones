@@ -8,7 +8,7 @@ import javax.swing.JTable;
 
 public interface AdministradorDAO {
     
-    public int crearAgente(Usuario pUsuario, int pAgenciaId);
+    public int crearAgente(Usuario pUsuario, int pAgenciaId, int pIdAdmin);
     
     public int seleccionarUsuarios(JTable pTable);
     
@@ -25,4 +25,10 @@ public interface AdministradorDAO {
     public int crearSesion(Sesion pSesion);
     
     public int cancelarSesion(int pIdSesion);
+    
+    public int seleccionarTransacciones(int pSesion, JTable pTable);
+    
+    public int seleccionarEstadisticasTransacciones(int pSesion, JTable pTable);
+    
+    public List<Integer> seleccionarTodasSesiones();
 }

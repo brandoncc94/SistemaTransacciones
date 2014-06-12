@@ -20,7 +20,7 @@ public class ConsultasAdministradorDAO implements AdministradorDAO {
     public ConsultasAdministradorDAO(){ }
      
      @Override
-     public int crearAgente(Usuario pUsuario, int pAgenciaId){
+     public int crearAgente(Usuario pUsuario, int pAgenciaId, int pIdAdmin){
         Connection conn = null;
         PreparedStatement stmt;
         int rowCount = 0;
@@ -34,7 +34,8 @@ public class ConsultasAdministradorDAO implements AdministradorDAO {
                     + "@usuario = ?, "
                     + "@password = ?, "
                     + "@tipo = ?, "
-                    + "@agenciaId = ? ");
+                    + "@agenciaId = ?, "
+                    + "@idAdmin = ? ");
             stmt.setString(1, pUsuario.getNombre());
             stmt.setString(2, pUsuario.getApellidoP());
             stmt.setString(3, pUsuario.getApellidoM());
@@ -42,6 +43,7 @@ public class ConsultasAdministradorDAO implements AdministradorDAO {
             stmt.setString(5, pUsuario.getPassword());
             stmt.setInt(6, pUsuario.getTipo());
             stmt.setInt(7, pAgenciaId);
+            stmt.setInt(8, pIdAdmin);
             
             stmt.executeUpdate();
             rowCount = 1;
@@ -404,5 +406,133 @@ public class ConsultasAdministradorDAO implements AdministradorDAO {
             }
         }
         return rowCount;
+    }
+    
+    @Override
+    public int seleccionarTransacciones(int pSesion, JTable pTable){
+        Connection conn = null;
+        PreparedStatement stmt;
+        ResultSet rs;
+        
+        try{              
+            conn = SQLServerDAOFactory.createConnection();
+            stmt = conn.prepareStatement("EXEC SPUMostrarTransacciones @idSesion = ?");
+            stmt.setInt(1, pSesion);
+            rs = stmt.executeQuery();
+            
+            DefaultTableModel tabla= new DefaultTableModel();
+
+            tabla.addColumn("Id Transacción");
+            tabla.addColumn("Monto Transado");
+            tabla.addColumn("Tipo Cambio");
+            tabla.addColumn("Fecha");
+
+            while (rs.next()){
+                Object dato[] = new  Object[4];
+                for (int i=0; i<4; i++){
+                    dato[i]=rs.getString(i+1);
+                }
+                tabla.addRow(dato);
+            }
+
+            pTable.setModel(tabla);
+            
+            return 1;
+        } 
+        catch(SQLException e){
+            System.out.println("Message: " + e.getMessage() + "\n" + "Code: " + e.getErrorCode());
+        } 
+        finally{
+            if(conn != null){
+                try{
+                    conn.close();
+                }
+                catch(SQLException e){
+                    System.out.println("Message: " + e.getMessage() + "\n" + "Code: " + e.getErrorCode());
+                }
+            }
+        }
+        return -1;
+    }
+    
+    @Override
+    public List<Integer> seleccionarTodasSesiones(){
+        Connection conn = null;
+        PreparedStatement stmt;
+        ResultSet rs;
+        List<Integer> sesiones = new ArrayList<>();
+        
+        try{  
+            conn = SQLServerDAOFactory.createConnection();
+            stmt = conn.prepareStatement("SELECT idSesion FROM Sesiones ");
+            rs = stmt.executeQuery();
+            
+            sesiones = new ArrayList();
+            
+            while(rs.next()){
+                sesiones.add(rs.getInt("idSesion"));
+            }
+        } 
+        catch(SQLException e){
+            System.out.println("Message: " + e.getMessage() + "\n" + "Code: " + e.getErrorCode());
+        }
+        finally{
+            if(conn != null){
+                try{
+                    conn.close();
+                }
+                catch(SQLException e){
+                    System.out.println("Message: " + e.getMessage() + "\n" + "Code: " + e.getErrorCode());
+                }
+            }
+        }
+        
+        return sesiones;
+    }
+    
+    @Override
+    public int seleccionarEstadisticasTransacciones(int pSesion, JTable pTable){
+        Connection conn = null;
+        PreparedStatement stmt;
+        ResultSet rs;
+        
+        try{              
+            conn = SQLServerDAOFactory.createConnection();
+            stmt = conn.prepareStatement("EXEC SPUMostrarEstadisticasTransacciones @idSesion = ?");
+            stmt.setInt(1, pSesion);
+            rs = stmt.executeQuery();
+            
+            DefaultTableModel tabla= new DefaultTableModel();
+
+            tabla.addColumn("Total de Transacciones procesadas");
+            tabla.addColumn("Total del Monto Transado");
+            tabla.addColumn("Promedio del Tipo de Cambio");
+
+            while (rs.next()){
+                Object dato[] = new  Object[3];
+                for (int i=0; i<3; i++){
+                    dato[i]=rs.getString(i+1);
+                }
+                tabla.addRow(dato);
+            }
+
+            pTable.setModel(tabla);
+            
+            return 1;
+        } 
+        catch(SQLException e){
+            System.out.println("Message: " + e.getMessage() + "\n" + "Code: " + e.getErrorCode());
+        } 
+        finally{
+            if(conn != null){
+                try{
+                    conn.close();
+                }
+                catch(SQLException e){
+                    System.out.println("Message: " + e.getMessage() + "\n" + "Code: " + e.getErrorCode());
+                }
+            }
+        }
+        return -1;
     }
 }
