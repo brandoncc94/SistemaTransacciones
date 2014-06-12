@@ -273,12 +273,21 @@ public class ConsultasAdministradorDAO implements AdministradorDAO {
             tabla.addColumn("Monto");
             tabla.addColumn("TipoCambio");
             tabla.addColumn("Id Usuario");
+            tabla.addColumn("Tipo Oferta");
 
             while (rs.next()){
-                Object dato[] = new  Object[4];
-                for (int i=0; i<4; i++){
+                Object dato[] = new  Object[5];
+                for (int i=0; i<5; i++){
                     dato[i]=rs.getString(i+1);
                 }
+                
+                String tipoOferta = dato[4].toString();
+                
+                if (tipoOferta.equals("0"))
+                    dato[4] = "Venta";
+                else
+                    dato[4] = "Compra";
+                
                 tabla.addRow(dato);
             }
 
