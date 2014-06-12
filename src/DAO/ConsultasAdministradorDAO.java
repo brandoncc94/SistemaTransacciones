@@ -156,7 +156,6 @@ public class ConsultasAdministradorDAO implements AdministradorDAO {
                     for (int i=0; i<4; i++){
                         dato[i]=rs.getString(i+1);
                         if(i == 3){
-                            JOptionPane.showMessageDialog(null, dato[i]);
                             if(dato[i].equals("1") || dato[i].equals("True"))
                                 dato[i] = "Activo";
                             else
@@ -313,7 +312,7 @@ public class ConsultasAdministradorDAO implements AdministradorDAO {
         
         try{  
             conn = SQLServerDAOFactory.createConnection();
-            stmt = conn.prepareStatement("SELECT idSesion FROM Sesiones");
+            stmt = conn.prepareStatement("SELECT idSesion FROM Sesiones WHERE isFinalizada = 'False' ");
             rs = stmt.executeQuery();
             
             sesiones = new ArrayList();
@@ -354,6 +353,38 @@ public class ConsultasAdministradorDAO implements AdministradorDAO {
             stmt.setInt(1, pSesion.getAdminId());
             stmt.setInt(2, pSesion.getPorcentComision());
             stmt.setBoolean(3, pSesion.isIsFinalizada());
+            
+            stmt.executeUpdate();
+            rowCount = 1;
+        } 
+        catch(SQLException e){
+            rowCount = -1;
+            System.out.println("Message: " + e.getMessage() + "\n" + "Code: " + e.getErrorCode());
+        }
+        finally{
+            if(conn != null){
+                try{
+                    conn.close();
+                }
+                catch(SQLException e){
+                    System.out.println("Message: " + e.getMessage() + "\n" + "Code: " + e.getErrorCode());
+                }
+            }
+        }
+        return rowCount;
+    }
+    
+    @Override
+    public int cancelarSesion(int pIdSesion){
+        Connection conn = null;
+        PreparedStatement stmt;
+        int rowCount = 0;
+        
+        try{  
+            conn = SQLServerDAOFactory.createConnection();
+            stmt = conn.prepareStatement("EXEC SPUActualizarSesion "
+                    + "@idSesion = ? ");
+            stmt.setInt(1, pIdSesion);
             
             stmt.executeUpdate();
             rowCount = 1;

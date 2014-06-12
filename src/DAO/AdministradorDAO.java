@@ -23,4 +23,6 @@ public interface AdministradorDAO {
     public List<Integer> seleccionarSesiones();
     
     public int crearSesion(Sesion pSesion);
+    
+    public int cancelarSesion(int pIdSesion);
 }
