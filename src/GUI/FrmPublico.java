@@ -20,7 +20,7 @@ public class FrmPublico extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         
-        tbxTipoCambioProm.setText(montoTransado.toString());
+        tbxMontoTransado.setText(montoTransado.toString());
         tbxTipoCambioProm.setText(tipoCambioProm.toString());
     }
 
@@ -41,7 +41,7 @@ public class FrmPublico extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         tbxTipoCambioProm = new javax.swing.JTextField();
-        tbxMontoTransado1 = new javax.swing.JTextField();
+        tbxMontoTransado = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -70,9 +70,13 @@ public class FrmPublico extends javax.swing.JFrame {
             }
         });
 
+        tbxTipoCambioProm.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        tbxTipoCambioProm.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         tbxTipoCambioProm.setEnabled(false);
 
-        tbxMontoTransado1.setEnabled(false);
+        tbxMontoTransado.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        tbxMontoTransado.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        tbxMontoTransado.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,7 +101,7 @@ public class FrmPublico extends javax.swing.JFrame {
                                 .addGap(29, 29, 29)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(tbxTipoCambioProm, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tbxMontoTransado1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(tbxMontoTransado, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(191, 191, 191)
                         .addComponent(jLabel4)))
@@ -118,7 +122,7 @@ public class FrmPublico extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel2))
-                    .addComponent(tbxMontoTransado1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tbxMontoTransado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
@@ -181,7 +185,7 @@ public class FrmPublico extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField tbxMontoTransado1;
+    private javax.swing.JTextField tbxMontoTransado;
     private javax.swing.JTextField tbxTipoCambioProm;
     // End of variables declaration//GEN-END:variables
 }

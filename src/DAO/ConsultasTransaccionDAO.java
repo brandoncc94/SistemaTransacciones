@@ -46,7 +46,7 @@ public class ConsultasTransaccionDAO implements TransaccionDAO{
             }
         }
         
-        return montoTransado;
+        return montoTransado;  
     }
     
     @Override
