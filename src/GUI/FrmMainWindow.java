@@ -2,9 +2,12 @@
 package GUI;
 
 import DAO.AdministradorDAO;
+import DAO.SesionDAO;
+import DAO.TransaccionDAO;
 import DAO.UsuarioDAO;
 import Factory.DAOFactory;
 import java.awt.HeadlessException;
+import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -157,7 +160,17 @@ public class FrmMainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultasActionPerformed
-        // TODO add your handling code here:
+        
+       DAOFactory sqlserverFactory = DAOFactory.getDAOFactory(DAOFactory.SQLSERVER);
+       TransaccionDAO transaccionDAO = sqlserverFactory.getTransaccionDAO();
+       SesionDAO sesionDAO = sqlserverFactory.getSesionDAO();
+       int sesionId = sesionDAO.obtenerSesionActual().get(0);
+       
+       BigDecimal vals[] = new BigDecimal[2];
+       vals[0] = transaccionDAO.obtenerMontoTransado(sesionId);
+       vals[1] = transaccionDAO.obtenerTipoCambioPromedio(sesionId);
+       
+       FrmPublico.main(vals);    
     }//GEN-LAST:event_btnConsultasActionPerformed
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed

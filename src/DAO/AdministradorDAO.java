@@ -31,4 +31,5 @@ public interface AdministradorDAO {
     public int seleccionarEstadisticasTransacciones(int pSesion, JTable pTable);
     
     public List<Integer> seleccionarTodasSesiones();
+    
 }

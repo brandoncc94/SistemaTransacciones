@@ -61,6 +61,11 @@ public class SQLServerDAOFactory extends DAOFactory {
         return new ConsultasParticipanteDAO();
     }
     
+    @Override
+    public TransaccionDAO getTransaccionDAO(){
+        return new ConsultasTransaccionDAO();
+    }
+    
 }
 
 
