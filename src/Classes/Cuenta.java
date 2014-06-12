@@ -6,16 +6,26 @@ import java.math.BigDecimal;
 
 public class Cuenta {
     
+    private int id;
     private boolean isDolar;
     private BigDecimal saldo;
     private BigDecimal montoCongelado;
     private int participanteId;
 
-    public Cuenta(boolean isDolar, BigDecimal saldo, BigDecimal montoCongelado, int participanteId) {
+    public Cuenta(int id, boolean isDolar, BigDecimal saldo, BigDecimal montoCongelado, int participanteId) {
+        this.id = id;
         this.isDolar = isDolar;
         this.saldo = saldo;
         this.montoCongelado = montoCongelado;
         this.participanteId = participanteId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public boolean getIsDolar() {
