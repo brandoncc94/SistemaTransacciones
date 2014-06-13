@@ -17,9 +17,7 @@ import javax.swing.JOptionPane;
 
 public class FrmMainWindow extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrmMainWindow
-     */
+    public int intentos;
     public FrmMainWindow() {
         initComponents();        
         setLocationRelativeTo(null);
@@ -175,47 +173,63 @@ public class FrmMainWindow extends javax.swing.JFrame {
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         if(tbxUsuario.getText().trim().length() != 0 && tbxPassword.getPassword().length != 0){
-            try {
-                String password = new String(tbxPassword.getPassword());
+            if(tbxPassword.getPassword().length >= 6){
                 try {
-                    password = convertToMD5(password);
-                    DAOFactory sqlserverFactory = DAOFactory.getDAOFactory(DAOFactory.SQLSERVER);
-                    UsuarioDAO usuarioDAO = sqlserverFactory.getUsuarioDAO();
+                    String password = new String(tbxPassword.getPassword());
+                    try {
+                        password = convertToMD5(password);
+                        DAOFactory sqlserverFactory = DAOFactory.getDAOFactory(DAOFactory.SQLSERVER);
+                        UsuarioDAO usuarioDAO = sqlserverFactory.getUsuarioDAO();
 
-                    List<Integer> result = usuarioDAO.iniciarSesion(tbxUsuario.getText(),password);
-                    if(result.get(1) == 1){
-                        dispose();
-                        String info[] = new String[1];
-                        info[0] = String.valueOf(result.get(0));
-                        FrmAdministrador.main(info);
-                    }
-                    else if(result.get(1) == 2){
-                        dispose();
-                        String info[] = new String[1];
-                        info[0] = String.valueOf(result.get(0));
-                        FrmAgente.main(info);
-                    }                         
-                    else if(result.get(1) == 3){
-                        AdministradorDAO adminDAO = sqlserverFactory.getAdministradorDAO();
-                        int suspendido = adminDAO.isSuspendido(result.get(0));
-                        if(suspendido == 1){
+                        List<Integer> result = usuarioDAO.iniciarSesion(tbxUsuario.getText(),password);
+                        if(result.get(1) == 1){
+                            intentos = 0;
                             dispose();
                             String info[] = new String[1];
                             info[0] = String.valueOf(result.get(0));
-                            FrmParticipante.main(info);                   
+                            FrmAdministrador.main(info);
                         }
-                        else
-                            JOptionPane.showMessageDialog(null, "Este usuario se encuentra suspendido.");                     
+                        else if(result.get(1) == 2){
+                            intentos = 0;
+                            dispose();
+                            String info[] = new String[1];
+                            info[0] = String.valueOf(result.get(0));
+                            FrmAgente.main(info);
+                        }                         
+                        else if(result.get(1) == 3){
+                            intentos = 0;
+                            AdministradorDAO adminDAO = sqlserverFactory.getAdministradorDAO();
+                            int suspendido = adminDAO.isSuspendido(result.get(0));
+                            if(suspendido == 1){
+                                dispose();
+                                String info[] = new String[1];
+                                info[0] = String.valueOf(result.get(0));
+                                FrmParticipante.main(info);                   
+                            }
+                            else{
+                                intentos = 0;
+                                JOptionPane.showMessageDialog(null, "Este usuario se encuentra suspendido.");                     
+                            }
+                        }
+                        else{
+                            intentos++;
+                            if(intentos >=3){
+                                JOptionPane.showMessageDialog(null, "Han sido demasiados intentos, se cerrará la aplicación."); 
+                                System.exit(0);
+                            }
+                            else
+                                JOptionPane.showMessageDialog(null, "Los datos ingresados son incorrectos. Favor intente de nuevo."); 
+                        }
+
+                    } catch (NoSuchAlgorithmException ex) {
+                        Logger.getLogger(FrmMainWindow.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    else
-                        JOptionPane.showMessageDialog(null, "Los datos ingresados son incorrectos. Favor intente de nuevo."); 
-                    
-                } catch (NoSuchAlgorithmException ex) {
-                    Logger.getLogger(FrmMainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }catch(HeadlessException e){
+                    JOptionPane.showMessageDialog(rootPane, e.getMessage());
                 }
-            }catch(HeadlessException e){
-                JOptionPane.showMessageDialog(rootPane, e.getMessage());
             }
+            else
+                JOptionPane.showMessageDialog(rootPane, "La contraseña debe de tener al menos 6 caracteres o más.");
         }else{
             JOptionPane.showMessageDialog(rootPane, "Favor no dejar espacios en blanco.");
         }        
