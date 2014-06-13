@@ -46,7 +46,11 @@ public class ConsultasTransaccionDAO implements TransaccionDAO{
             }
         }
         
+        if (montoTransado == null)   
+            montoTransado = BigDecimal.ZERO;
+        
         return montoTransado;  
+
     }
     
     @Override
@@ -82,6 +86,9 @@ public class ConsultasTransaccionDAO implements TransaccionDAO{
                 }
             }
         }
+        
+        if (tipoCambioProm == null)   
+            tipoCambioProm = BigDecimal.ZERO;
         
         return tipoCambioProm;
     }
