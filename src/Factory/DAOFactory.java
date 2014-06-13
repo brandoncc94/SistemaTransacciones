@@ -2,12 +2,13 @@
 package Factory;
 
 import DAO.AdministradorDAO;
-import DAO.UsuarioDAO;
-import DAO.OfertaDAO;
-import DAO.SesionDAO;
+import DAO.AgenteDAO;
 import DAO.CuentaDAO;
+import DAO.OfertaDAO;
 import DAO.ParticipanteDAO;
+import DAO.SesionDAO;
 import DAO.TransaccionDAO;
+import DAO.UsuarioDAO;
 
 public abstract class DAOFactory {
 
@@ -22,6 +23,7 @@ public abstract class DAOFactory {
     public abstract CuentaDAO getCuentaDAO();
     public abstract ParticipanteDAO getParticipanteDAO();
     public abstract TransaccionDAO getTransaccionDAO();
+    public abstract AgenteDAO getAgenteDAO();
 
     public static DAOFactory getDAOFactory(int whichFactory){
 

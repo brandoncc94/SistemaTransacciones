@@ -189,8 +189,12 @@ public class FrmMainWindow extends javax.swing.JFrame {
                         info[0] = String.valueOf(result.get(0));
                         FrmAdministrador.main(info);
                     }
-                    else if(result.get(1) == 2)
-                        JOptionPane.showMessageDialog(null, "AGENTE"); 
+                    else if(result.get(1) == 2){
+                        dispose();
+                        String info[] = new String[1];
+                        info[0] = String.valueOf(result.get(0));
+                        FrmAgente.main(info);
+                    }                         
                     else if(result.get(1) == 3){
                         AdministradorDAO adminDAO = sqlserverFactory.getAdministradorDAO();
                         int suspendido = adminDAO.isSuspendido(result.get(0));
