@@ -453,25 +453,28 @@ public class FrmParticipante extends javax.swing.JFrame {
 //                int result = 0;
 //                if (aprobada)
 //                {
-//                    // Congelar Monto
-//                    int resultCong = cuentaDAO.congelarMonto(cuenta.getId(), aCongelar);
-//                    
-//                    if(resultCong > 0)
-//                    {
-                        // Crear Oferta       
-                        Oferta oferta;
-                        oferta = new Oferta(isCompra, monto, tipoCambio, true, 
-                                            Integer.parseInt(id), idSesion);               
-                        int result = ofertaDAO.crearOferta(oferta);
-//                    }
-//                }
-                
-                if(result > 0)
+                // Congelar Monto 
+                CuentaDAO cuentaDAO = sqlserverFactory.getCuentaDAO();
+                int resultCong = cuentaDAO.congelarMonto(tipoCambio, Integer.parseInt(id), monto, isCompra);
+
+                if(resultCong > 0)
+                {
+                    // Crear Oferta       
+                    Oferta oferta;
+                    oferta = new Oferta(isCompra, monto, tipoCambio, true, 
+                                        Integer.parseInt(id), idSesion);               
+                    int result = ofertaDAO.crearOferta(oferta);
+                    
+                    if(result > 0)
                     JOptionPane.showMessageDialog(null, "Oferta creada correctamente."); 
 
                 else
-                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error al crear la oferta "
-                                        + "o no hay suficientes fondos, favor intente de nuevo."); 
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error al crear la oferta,"
+                                                        + " favor intente de nuevo."); 
+                }
+                
+                else
+                    JOptionPane.showMessageDialog(null, "No hay suficientes fondos en la cuenta.");                            
             }
             
             catch(HeadlessException e)
@@ -489,15 +492,15 @@ public class FrmParticipante extends javax.swing.JFrame {
         // Cargar pizarra de ofertas
         DAOFactory sqlserverFactory = DAOFactory.getDAOFactory(DAOFactory.SQLSERVER);
         AdministradorDAO adminDAO = sqlserverFactory.getAdministradorDAO();
-        int resultPizz = adminDAO.mostrarPizarra("ID", pizarra);
-        if(resultPizz < 0)
+        int resultPizarra = adminDAO.mostrarPizarra("ID", pizarra);
+        if(resultPizarra < 0)
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error."); 
         
         // Cargar últimas ofertas
         ParticipanteDAO participanteDAO = sqlserverFactory.getParticipanteDAO();
         int  resultNeg = participanteDAO.mostrarNegociaciones(Integer.parseInt(id), tablaNegociaciones);
-        if (resultNeg < 0)
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error."); 
+        //if (resultNeg < 0)
+            //JOptionPane.showMessageDialog(null, "Ha ocurrido un error."); 
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

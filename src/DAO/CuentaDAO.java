@@ -10,6 +10,6 @@ import Classes.Cuenta;
 public interface CuentaDAO {
     
     public Cuenta obtenerCuenta(int participanteId, boolean isDolar);
-    public int congelarMonto(int cuentaId, BigDecimal monto);
+    public int congelarMonto(BigDecimal tipoCambio, int usuarioId, BigDecimal montoOferta, boolean isCompra);
     
 }

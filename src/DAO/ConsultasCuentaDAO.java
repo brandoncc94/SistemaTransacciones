@@ -56,23 +56,26 @@ public class ConsultasCuentaDAO implements CuentaDAO{
     }
     
     @Override
-    public int congelarMonto(int cuentaId, BigDecimal monto)
+    public int congelarMonto(BigDecimal tipoCambio, int usuarioId, BigDecimal montoOferta, boolean isCompra)
     {
         Connection conn = null;
         PreparedStatement stmt;
-        int rowCount = 0;
+        int resultado = 0;
         
         try{         
             conn = SQLServerDAOFactory.createConnection();
-            stmt = conn.prepareStatement("EXEC SPCongelarMonto @idCuenta = ?, @montoCongelar = ?");
-            stmt.setInt(1, cuentaId);
-            stmt.setBigDecimal(2, monto); 
+            stmt = conn.prepareStatement("EXEC SPCongelarMonto @tipoCambio = ?, @usuarioId = ?, "
+                                        + "@montoOferta= ?, @isCompra = ?");
+            stmt.setBigDecimal(1, tipoCambio);
+            stmt.setInt(2, usuarioId); 
+            stmt.setBigDecimal(3, montoOferta);
+            stmt.setBoolean(4, isCompra);
             stmt.executeUpdate();
             
-            rowCount = 1;       
+            resultado = 1;       
         } 
         catch(SQLException e){
-            rowCount = -1;       
+            resultado = -1;       
             System.out.println("Message: " + e.getMessage() + "\n" + "Code: " + e.getErrorCode());
         }
         finally{
@@ -85,7 +88,7 @@ public class ConsultasCuentaDAO implements CuentaDAO{
                 }
             }
         }        
-        return rowCount;
+        return resultado;
     }
     
 }

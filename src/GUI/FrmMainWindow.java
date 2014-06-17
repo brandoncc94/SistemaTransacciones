@@ -162,7 +162,7 @@ public class FrmMainWindow extends javax.swing.JFrame {
        DAOFactory sqlserverFactory = DAOFactory.getDAOFactory(DAOFactory.SQLSERVER);
        TransaccionDAO transaccionDAO = sqlserverFactory.getTransaccionDAO();
        SesionDAO sesionDAO = sqlserverFactory.getSesionDAO();
-       int sesionId = sesionDAO.obtenerSesionActual().get(0);
+       int sesionId = sesionDAO.obtenerSesionActual();
        
        BigDecimal vals[] = new BigDecimal[2];
        vals[0] = transaccionDAO.obtenerMontoTransado(sesionId);
