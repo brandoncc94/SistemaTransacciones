@@ -5,6 +5,6 @@ import java.util.List;
 
 public interface SesionDAO {
     
-    public List<Integer> obtenerSesionActual();
+    public int obtenerSesionActual();
     
 }

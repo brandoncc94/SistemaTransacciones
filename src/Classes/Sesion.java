@@ -5,10 +5,10 @@ package Classes;
 public class Sesion {
     
     private int adminId;
-    private int porcentComision;
+    private float porcentComision;
     private boolean isFinalizada;
 
-    public Sesion(int adminId, int porcentComision, boolean isFinalizada) {
+    public Sesion(int adminId, float porcentComision, boolean isFinalizada) {
         this.adminId = adminId;
         this.porcentComision = porcentComision;
         this.isFinalizada = isFinalizada;
@@ -30,7 +30,7 @@ public class Sesion {
         this.adminId = adminId;
     }
 
-    public int getPorcentComision() {
+    public float getPorcentComision() {
         return porcentComision;
     }
 

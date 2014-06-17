@@ -363,7 +363,7 @@ public class ConsultasAdministradorDAO implements AdministradorDAO {
                     + "@comision = ?, "
                     + "@isFinalizada = ? ");
             stmt.setInt(1, pSesion.getAdminId());
-            stmt.setInt(2, pSesion.getPorcentComision());
+            stmt.setFloat(2, pSesion.getPorcentComision());
             stmt.setBoolean(3, pSesion.isIsFinalizada());
             
             stmt.executeUpdate();

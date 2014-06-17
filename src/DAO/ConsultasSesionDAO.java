@@ -14,14 +14,12 @@ public class ConsultasSesionDAO implements SesionDAO {
     public ConsultasSesionDAO() {}
     
     @Override
-    public List<Integer> obtenerSesionActual()
+    public int obtenerSesionActual()
     {
         Connection conn = null;
         PreparedStatement stmt;
         ResultSet rs;
-        int id = 0;
-        int comision = 0;
-        List<Integer> info = new ArrayList<>();    
+        int id = 0;  
         
         try{         
             conn = SQLServerDAOFactory.createConnection();
@@ -31,14 +29,10 @@ public class ConsultasSesionDAO implements SesionDAO {
             
             while(rs.next()){
                 id = rs.getInt("idSesion");
-                comision = rs.getInt("porcentComision");
             }
-            
-            info.add(id);
-            info.add(comision);
+
         } 
         catch(SQLException e){
-            info = null;
             System.out.println("Message: " + e.getMessage() + "\n" + "Code: " + e.getErrorCode());
         }
         finally{
@@ -51,6 +45,6 @@ public class ConsultasSesionDAO implements SesionDAO {
                 }
             }
         }        
-        return info;
+        return id;
     }
 }
