@@ -423,36 +423,7 @@ public class FrmParticipante extends javax.swing.JFrame {
                 // Sesion actual
                 SesionDAO sesionDAO = sqlserverFactory.getSesionDAO();
                 int idSesion = sesionDAO.obtenerSesionActual();
-//                
-//                // Verificar que la cuenta tiene suficientes fondos
-//                CuentaDAO cuentaDAO = sqlserverFactory.getCuentaDAO();
-//                Cuenta cuenta;
-//                boolean aprobada = false;
-//                BigDecimal aCongelar = monto;
-//                
-//                BigDecimal comision = BigDecimal.valueOf((double)resultSesion.get(1) / 100);
-//                comision = comision.multiply(monto);
-//                
-//                if (isCompra) // monto*tipoCambio+(monto*tipoCambio*comision/100)
-//                {
-//                    cuenta = cuentaDAO.obtenerCuenta(Integer.parseInt(id), false);    
-//                    comision = comision.multiply(tipoCambio);
-//                    aCongelar = aCongelar.multiply(tipoCambio);
-//                    aCongelar = aCongelar.add(comision);
-//                }
-//                
-//                else // monto+(monto*comision/100)
-//                {
-//                    cuenta = cuentaDAO.obtenerCuenta(Integer.parseInt(id), true);
-//                   aCongelar = aCongelar.add(comision);
-//                }
-//                
-//                if (cuenta.getSaldo().compareTo(aCongelar) != -1)            
-//                    aprobada = true;                  
-//  
-//                int result = 0;
-//                if (aprobada)
-//                {
+                
                 // Congelar Monto 
                 CuentaDAO cuentaDAO = sqlserverFactory.getCuentaDAO();
                 int resultCong = cuentaDAO.congelarMonto(tipoCambio, Integer.parseInt(id), monto, isCompra);

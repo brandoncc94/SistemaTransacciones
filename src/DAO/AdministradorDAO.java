@@ -32,4 +32,6 @@ public interface AdministradorDAO {
     
     public List<Integer> seleccionarTodasSesiones();
     
+    public String obtenerAdminInfo(int sesionId);
+    
 }

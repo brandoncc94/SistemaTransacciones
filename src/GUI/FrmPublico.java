@@ -1,6 +1,8 @@
 
 package GUI;
 
+import DAO.AdministradorDAO;
+import DAO.SesionDAO;
 import DAO.UsuarioDAO;
 import Factory.DAOFactory;
 import java.awt.HeadlessException;
@@ -22,6 +24,17 @@ public class FrmPublico extends javax.swing.JFrame {
         
         tbxMontoTransado.setText(montoTransado.toString());
         tbxTipoCambioProm.setText(tipoCambioProm.toString());
+        
+        DAOFactory sqlserverFactory = DAOFactory.getDAOFactory(DAOFactory.SQLSERVER);
+        
+        // Sesion actual      
+        SesionDAO sesionDAO = sqlserverFactory.getSesionDAO();
+        int idSesion = sesionDAO.obtenerSesionActual();
+        lblSesionId.setText(String.valueOf(idSesion));
+        
+        // Administrador Info
+        AdministradorDAO administradorDAO = sqlserverFactory.getAdministradorDAO();
+        lblAdministrador.setText(administradorDAO.obtenerAdminInfo(idSesion));
     }
 
     /**
@@ -42,6 +55,8 @@ public class FrmPublico extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         tbxTipoCambioProm = new javax.swing.JTextField();
         tbxMontoTransado = new javax.swing.JTextField();
+        lblSesionId = new javax.swing.JLabel();
+        lblAdministrador = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -78,6 +93,10 @@ public class FrmPublico extends javax.swing.JFrame {
         tbxMontoTransado.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         tbxMontoTransado.setEnabled(false);
 
+        lblSesionId.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        lblAdministrador.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -89,7 +108,10 @@ public class FrmPublico extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblAdministrador))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -97,7 +119,10 @@ public class FrmPublico extends javax.swing.JFrame {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(jLabel3)
                                             .addComponent(jLabel2)))
-                                    .addComponent(jLabel5))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lblSesionId)))
                                 .addGap(29, 29, 29)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(tbxTipoCambioProm, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -115,11 +140,15 @@ public class FrmPublico extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(jLabel6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(lblAdministrador))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(lblSesionId))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel2))
                     .addComponent(tbxMontoTransado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -185,6 +214,8 @@ public class FrmPublico extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblAdministrador;
+    private javax.swing.JLabel lblSesionId;
     private javax.swing.JTextField tbxMontoTransado;
     private javax.swing.JTextField tbxTipoCambioProm;
     // End of variables declaration//GEN-END:variables

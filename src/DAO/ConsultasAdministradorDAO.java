@@ -546,4 +546,46 @@ public class ConsultasAdministradorDAO implements AdministradorDAO {
         return -1;
     }
     
+    @Override
+    public String obtenerAdminInfo(int sesionId)
+    {
+        Connection conn = null;
+        PreparedStatement stmt;
+        ResultSet rs;
+        String nombreAdmin = "";
+        
+        try{  
+            conn = SQLServerDAOFactory.createConnection();
+            stmt = conn.prepareStatement("EXEC SPObtenerAdministrador @sesionId = ?");
+            stmt.setInt(1, sesionId);
+            
+            rs = stmt.executeQuery();
+                     
+            while(rs.next()){
+                nombreAdmin = (rs.getString("nombre")) + " ";
+                nombreAdmin += (rs.getString("apellidoP")) + " ";
+                nombreAdmin += (rs.getString("apellidoM"));             
+            }
+        } 
+        
+        catch(SQLException e)
+        {
+            System.out.println("Message: " + e.getMessage() + "\n" + "Code: " + e.getErrorCode());
+        }
+        finally
+        {
+            if(conn != null){
+                try
+                {
+                    conn.close();
+                }
+                catch(SQLException e)
+                {
+                    System.out.println("Message: " + e.getMessage() + "\n" + "Code: " + e.getErrorCode());
+                }
+            }
+        }
+        
+        return nombreAdmin;
+    }
 }
