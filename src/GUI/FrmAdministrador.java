@@ -984,7 +984,7 @@ public class FrmAdministrador extends javax.swing.JFrame {
         if(tbxComision.getText().trim().length() != 0){
             DAOFactory sqlserverFactory = DAOFactory.getDAOFactory(DAOFactory.SQLSERVER);
             AdministradorDAO adminDAO = sqlserverFactory.getAdministradorDAO();
-            Sesion sesion = new Sesion(Integer.parseInt(id), Integer.parseInt(tbxComision.getText()), false);
+            Sesion sesion = new Sesion(Integer.parseInt(id), Float.parseFloat(tbxComision.getText()), false);
             int result = adminDAO.crearSesion(sesion);
             if(result < 0)
                 JOptionPane.showMessageDialog(null, "Ha ocurrido un error."); 
